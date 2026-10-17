@@ -1,0 +1,15 @@
+{
+  "name": "raintiles",
+  "short_name": "raintiles",
+  "icons": [
+    {
+      "src": "/raintiles-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#050510",
+  "background_color": "#050510",
+  "display": "standalone"
+}
