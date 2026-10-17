@@ -1,5 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, rootRouteId } from "@tanstack/react-router";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { routeTree } from "@/routeTree.gen";
@@ -14,4 +16,14 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it("verifies netlify.toml defines client publish and wildcard rewrite", () => {
+    const netlifyToml = readFileSync(resolve(process.cwd(), "netlify.toml"), "utf8");
+
+    expect(netlifyToml).toContain('publish = "dist/client"');
+    expect(netlifyToml).toContain('from = "/*"');
+    expect(netlifyToml).toContain('to = "/index.html"');
+    expect(netlifyToml).toContain("status = 200");
+  });
 });
+
