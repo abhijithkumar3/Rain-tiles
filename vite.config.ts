@@ -7,7 +7,7 @@ import { defineConfig, loadEnv } from "vite";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
-  const siteUrl = (env.VITE_SITE_URL || "https://your-production-domain.example").replace(
+  const siteUrl = (env["VITE_SITE_URL"] || "https://your-production-domain.example").replace(
     /\/+$/,
     "",
   );
@@ -15,7 +15,10 @@ export default defineConfig(({ mode }) => {
   return {
     resolve: { tsconfigPaths: true },
     plugins: [
-      tanstackStart({ server: { entry: "server" } }),
+      tanstackStart({
+        server: { entry: "server" },
+        prerender: { enabled: true },
+      }),
       viteReact(),
       tailwindcss(),
       {
